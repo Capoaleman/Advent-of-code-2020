@@ -5,7 +5,7 @@
 INPUT = [2, 0, 1, 7, 4, 14, 18]
 
 
-def next_num(data, turn, num):
+def next_num(turn, num):
     tmp = data.get(num, 0)
     data[num] = turn
     if tmp == 0:
@@ -14,15 +14,21 @@ def next_num(data, turn, num):
         return turn - tmp
 
 
-if __name__ == "__main__":
-    data = {}
-    for i, item in enumerate(INPUT):
-        data[item] = i+1
-    turn = i+1
+def play(top):
+    turn = len(INPUT)
     num = INPUT[-1]
-    while turn <= 30000000:  # Part 1 2020tn number, Part 2 30000000th number
-        num = next_num(data, turn, num)
+    while turn <= top:  # 30000000th number
+        num = next_num(turn, num)
         turn += 1
     for key, val in data.items():
-        if val == 30000000:
-            print("result", key)
+        if val == top:
+            return key
+
+
+if __name__ == "__main__":
+    # Part 1
+    data = dict([(item, i+1) for i, item in enumerate(INPUT)])
+    print("The 2020th number is:", play(2020))
+    # Part 2
+    data = dict([(item, i+1) for i, item in enumerate(INPUT)])
+    print("The 30000000th number is:", play(30000000))
